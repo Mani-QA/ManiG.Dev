@@ -1,6 +1,13 @@
 // Cloudflare Worker for serving static assets with maximum caching
+
+interface Env {
+  STATIC_ASSETS: {
+    fetch: (request: Request) => Promise<Response>;
+  };
+}
+
 export default {
-  async fetch(request: Request, env: { STATIC_ASSETS: Fetcher }): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     
     // Try to serve the static asset
@@ -44,4 +51,3 @@ export default {
     return response;
   },
 };
-
